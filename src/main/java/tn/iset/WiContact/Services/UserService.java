@@ -1,8 +1,12 @@
 package tn.iset.WiContact.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import tn.iset.WiContact.Entites.Role;
 import tn.iset.WiContact.Entites.User;
+
 import tn.iset.WiContact.Repositories.UserReposotiry;
 import java.util.List;
 
@@ -10,6 +14,11 @@ import java.util.List;
 public class UserService  implements IUserService {
     @Autowired
     private UserReposotiry userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -22,7 +31,8 @@ public class UserService  implements IUserService {
 
     @Override
     public List<User> addUsers(User user) {
-        userRepository.save(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User us=userRepository.save(user);
         return this.getAllUsers();
     }
 
@@ -41,8 +51,14 @@ public class UserService  implements IUserService {
         if (user.getEtat()!= null) us.setEtat(user.getEtat());
         if (user.getEmail()!= null) us.setEmail(user.getEmail());
         if (user.getPhoto()!= null) us.setPhoto(user.getPhoto());
-        if (user.getRole()!= null) us.setRole(user.getRole());
+        return userRepository.save(us);
+    }
 
-        return null;
+    @Override
+    public User login(String email, String password) throws Exception {
+        User us=userRepository.getUserByEmail(email);
+        if(us==null) throw new Exception("error login");
+        if(!passwordEncoder.matches(password,us.getPassword())) throw new Exception("login failed");
+        return us;
     }
 }

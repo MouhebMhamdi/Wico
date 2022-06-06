@@ -12,5 +12,5 @@ public interface IUserService {
     public List<User> addUsers(User user);
     public void deleteById(int Id);
     public User updateById(int Id , User user);
-
+    public User login(String email,String password) throws Exception;
 }

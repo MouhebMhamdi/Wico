@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 import tn.iset.WiContact.Entites.User;
 @Repository
 public interface UserReposotiry extends JpaRepository<User,Integer> {
+    User getUserByEmail(String email);
 
 }

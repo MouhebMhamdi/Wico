@@ -1,11 +1,13 @@
 package tn.iset.WiContact.Entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,5 +28,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private  Role role ;
     private Boolean Etat;
+    
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Payement> payement;
 
+    @ManyToMany
+    @JsonIgnore
+    private List<Projects> projects;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private CV cv;
 }
