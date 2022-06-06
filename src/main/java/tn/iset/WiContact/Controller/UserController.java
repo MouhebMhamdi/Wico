@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
     @Autowired
      IUserService iUserService;
@@ -42,8 +43,8 @@ public class UserController {
         return iUserService.updateById(id,user);
     }
 
-    @PostMapping("/signin")
-    public User login(@RequestParam String email,@RequestParam String password) throws Exception {
+    @PostMapping("/signin/{email}/{password}")
+    public User login(@PathVariable String email,@PathVariable String password) throws Exception {
         return iUserService.login(email,password);
     }
 }

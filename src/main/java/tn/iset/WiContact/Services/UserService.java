@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import tn.iset.WiContact.Entites.Role;
 import tn.iset.WiContact.Entites.User;
 
 import tn.iset.WiContact.Repositories.UserReposotiry;

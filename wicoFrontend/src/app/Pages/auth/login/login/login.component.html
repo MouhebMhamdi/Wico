@@ -1,0 +1,17 @@
+<section class="login-clean">
+        <form method="post" [formGroup]="myFormLogin" (submit)="login()">
+            <h2 class="visually-hidden">Login Form</h2>
+            <div class="illustration"><i class="bi bi-file-lock-fill"></i></div>
+            <div class="mb-3">
+            <div class="form-group">
+                <input class="form-control" type="email"  placeholder="Email" formControlName="email"  [ngClass]="{ 'is-invalid': submittedLogin && myFormLogin.controls['email'].errors }"></div>
+
+            </div>
+            <div class="mb-3">
+             <div class="form-group">
+                <input class="form-control" type="password" placeholder="Password" formControlName="password"  [ngClass]="{ 'is-invalid': submittedLogin && myFormLogin.controls['password'].errors }">
+            </div>
+            </div>
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Log In</button></div><a class="forgot" href="#">Sign Up</a><a class="forgot pt-3" href="#">Forgot your email or password?</a>
+        </form>
+</section>
