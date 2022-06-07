@@ -23,7 +23,16 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,private toastr: ToastrService,private router:Router) { }
 
   ngOnInit(): void {
-   
+    let role =localStorage.getItem('role');
+    if(role!=null){
+      if(role=="CLIENTS"){
+        this.router.navigate(['/client']);
+      }else if(role=="PERSONNELS"){
+        this.router.navigate(['/personnel']);
+      }else{
+        this.router.navigate(['/admin']);
+      }
+    } 
     this.users=new User();
     this.myFormLogin=this.formBuilder.group({
       email:['',[Validators.required,Validators.email]],
@@ -41,15 +50,25 @@ export class LoginComponent implements OnInit {
     }
 
     this.authentificationService.login(this.myFormLogin.value).subscribe(res=>{
+
+      this.authentificationService.loginwidhoutObservable(this.myFormLogin.value).subscribe();
+
       localStorage.setItem("User",JSON.stringify(res));
       localStorage.setItem("role",res.role);
       localStorage.setItem("email",res.email);
+      localStorage.setItem("idUser",String(res.id));
       if(res.role=="CLIENTS") {
-        this.router.navigate(['/user'])
+        this.router.navigate(['/client']).then(() => {
+          window.location.reload();
+        });
       }else if(res.role=="PERSONNELS"){
-        this.router.navigate(['/personnel'])
+        this.router.navigate(['/personnel']).then(() => {
+          window.location.reload();
+        });
       }else if(res.role=="ADMIN"){
-        this.router.navigate(['/admin'])
+        this.router.navigate(['/admin']).then(() => {
+          window.location.reload();
+        });
       };
 
     },(err)=>{ this.toastr.error("Login failed try again","Authentification error")})

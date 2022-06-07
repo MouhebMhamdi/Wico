@@ -1,1 +1,36 @@
-<p>client works!</p>
+
+<div class="container d-flex flex-column justify-content-center">
+<div class="input-group pb-5 d-flex justify-content-end">
+  <div class="form-outline">
+    <input type="search" id="form1" class="form-control searchTerm" [(ngModel)]="term"/>
+  </div>
+  <button type="button" disabled="true" class="btn btn-primary">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+<div class="card  " *ngFor="let p of Projects | filter: term | paginate: { itemsPerPage: 3, currentPage: p } ">
+    
+  <div class="card-body ">
+    <h5 class="card-title">{{p.title}} | </h5>
+    <p ><b >Start Date: {{p.startDate | date }}</b><b class="text-danger">   |    DeadLine: {{p.deadLine | date }}</b></p>
+ 
+    <li class="list-group-item" >Technologies</li>
+     <ul class="list-group" *ngFor="let tech of p.technologies">
+        <li   class="list-group-item list-group-item-warning" >
+      {{tech.domain}} <i *ngIf="tech.domain=='FRONTEND'" class="bi bi-file-code"></i> <i *ngIf="tech.domain=='BACKEND'" class="bi bi-window-fullscreen"></i> ==> {{tech.techName}} </li>
+        
+    </ul>
+        
+                
+    <h6 class="pt-3">Description :</h6>
+    <p class="card-text pt-2">{{p.description}}</p>
+    <div class="d-flex justify-content-end py-3">
+        <a href="#" class="btn btn-primary "><i class="bi bi-pencil-square"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; 
+        <a href="#" class="btn btn-danger "><i class="bi bi-trash3"></i></a>
+    </div>
+  </div>
+</div>
+<div class="paginator d-flex justify-content-center">
+    <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>

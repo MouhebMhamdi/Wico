@@ -25,5 +25,12 @@ export class AuthService {
 
     return this.http.post<User>(this.url+"/user/signin/"+data.email+"/"+data.password,data);
   }
+  loginwidhoutObservable(data:any){
+
+    return this.http.post(this.url+"/user/signin/"+data.email+"/"+data.password,data).pipe(map((res) => {
+      this.tab=res;
+      this.curUser.next(this.tab);
+    }));
+  }
    
 }

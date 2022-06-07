@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import {APP_BASE_HREF} from '@angular/common';
+import {APP_BASE_HREF, CommonModule} from '@angular/common';
 import { FooterComponent } from './shared/footer/footer/footer.component';
 import { WelcomePageComponent } from './Pages/Home/welcome-page/welcome-page.component';
 import { ServicesComponent } from './Pages/Home/services/services.component';
@@ -20,8 +20,8 @@ import { ClientComponent } from './Pages/Client/client/client.component';
 import { HomeComponent } from './Pages/Personnel/home/home.component';
 import { HomeAdminComponent } from './Pages/Admin/home-admin/home-admin.component';
 import { Page404Component } from './shared/page404/page404.component';
-
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,10 @@ import { Page404Component } from './shared/page404/page404.component';
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),NgbModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CommonModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]
