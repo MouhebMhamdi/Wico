@@ -32,5 +32,9 @@ export class AuthService {
       this.curUser.next(this.tab);
     }));
   }
+
+  getUserById(id:Number):Observable<User>{
+    return this.http.get<User>(this.url+"/user/"+id);
+  }
    
 }

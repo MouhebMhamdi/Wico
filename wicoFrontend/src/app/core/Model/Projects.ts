@@ -1,3 +1,4 @@
+import { Historique } from "./Historique";
 import { Technologies } from "./Technologies";
 
 export class Projects{
@@ -8,4 +9,7 @@ export class Projects{
     title: string;
     technologies:Technologies[];
     description:string;
+    idDevelopper:Number;
+    payed:Boolean;
+    historique:Historique;
   }  

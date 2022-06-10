@@ -54,6 +54,8 @@ export class LoginComponent implements OnInit {
       this.authentificationService.loginwidhoutObservable(this.myFormLogin.value).subscribe();
 
       localStorage.setItem("User",JSON.stringify(res));
+      localStorage.setItem("Nom",res.nom);
+      localStorage.setItem("Prenom",res.prenom);
       localStorage.setItem("role",res.role);
       localStorage.setItem("email",res.email);
       localStorage.setItem("idUser",String(res.id));

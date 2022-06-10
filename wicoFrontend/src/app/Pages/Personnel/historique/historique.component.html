@@ -1,6 +1,7 @@
-
 <div class="container d-flex flex-column justify-content-center">
+
 <div class="input-group pb-5 d-flex justify-content-end">
+
   <div class="form-outline">
     <input type="search" id="form1" class="form-control searchTerm" [(ngModel)]="term"/>
   </div>
@@ -8,7 +9,7 @@
     <i class="fas fa-search"></i>
   </button>
 </div>
-<div class="card  " *ngFor="let p of Projects | filter: term | paginate: { itemsPerPage: 3, currentPage: p } ">
+<div class="card  " *ngFor="let p of projects | filter: term | paginate: { itemsPerPage: 3, currentPage: p } ">
     
   <div class="card-body ">
     <h5 class="card-title">{{p.title}} | </h5>
@@ -20,16 +21,14 @@
       {{tech.domain}} <i *ngIf="tech.domain=='FRONTEND'" class="bi bi-file-code"></i> <i *ngIf="tech.domain=='BACKEND'" class="bi bi-window-fullscreen"></i> ==> {{tech.techName}} </li>
         
     </ul>
-    <h6 class="pt-3">Budget :</h6>       
-     <p class="card-text pt-2">{{p.price}} DT</p>  
+     
+         
     <h6 class="pt-3">Description :</h6>
-    <p class="card-text pt-2 desc">{{(p.description | slice:0:more )+'...'}}<a *ngIf="hide"  class=" stretched-link" (click)="ShowMore()">ShowMore</a><a *ngIf="!hide" class="stretched-link" (click)="ShowLess()">ShowLess</a></p>
-    <div class="d-flex justify-content-end py-3" *ngIf="p.idDevelopper==0">
-      <button class="btn btn-primary " (click)="takeProject(idUser,p.id)"><i class="bi bi-check-circle"></i> take this project</button>
-    </div>
-    <div class="d-flex justify-content-end py-3" *ngIf="p.idDevelopper!=0">
-      <button class="btn btn-danger " (click)="ConcelProject(idUser,p.id)"><i class="bi bi-x-lg"></i> Cancel</button>
-    </div>
+    <p class="card-text pt-2">{{p.description}}</p>
+   
+    
+  
+    
   </div>
 </div>
 <div class="paginator d-flex justify-content-center">

@@ -9,3 +9,15 @@
 .my-pagination /deep/ .ngx-pagination .current {
     background: #ffc800;
   }
+
+ 
+  .container-fluid{
+    margin-top: 50px;
+    margin-bottom: 10vh;
+  }
+  .stretched-link{
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+}
+

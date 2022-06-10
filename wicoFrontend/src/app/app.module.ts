@@ -22,6 +22,10 @@ import { HomeAdminComponent } from './Pages/Admin/home-admin/home-admin.componen
 import { Page404Component } from './shared/page404/page404.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { StripeModule } from "stripe-angular";
+import { ProfileComponent } from './Pages/Personnel/profile/profile.component';
+import { HistoriqueComponent } from './Pages/Personnel/historique/historique.component';
+import { ClientprofileComponent } from './Pages/Client/clientprofile/clientprofile.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +40,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ClientComponent,
     HomeComponent,
     HomeAdminComponent,
-    Page404Component
+    Page404Component,
+    ProfileComponent,
+    HistoriqueComponent,
+    ClientprofileComponent
     
   ],
   imports: [
@@ -49,7 +56,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     BrowserAnimationsModule,
     CommonModule,
     Ng2SearchPipeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    
+    StripeModule.forRoot("pk_test_51KueAAKTa1h49sQ0Qi5ND9GQbZm3iXE80K37aKfKNydSl6oc692kjIV4f5Std18wT2pVL6zInXu7sj787J04anBV00W5B3LFzv")
   ],
   providers: [{provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]

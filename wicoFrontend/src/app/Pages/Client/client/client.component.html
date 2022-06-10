@@ -1,6 +1,8 @@
 
 <div class="container d-flex flex-column justify-content-center">
+
 <div class="input-group pb-5 d-flex justify-content-end">
+<button class="btn btn-primary" (click)="opencontent(add)"><i class="bi bi-plus-circle"></i></button>
   <div class="form-outline">
     <input type="search" id="form1" class="form-control searchTerm" [(ngModel)]="term"/>
   </div>
@@ -21,12 +23,18 @@
         
     </ul>
         
-                
+    <h6 class="pt-3">Budget :</h6>       
+     <p class="card-text pt-2">{{p.price}} DT</p>    
     <h6 class="pt-3">Description :</h6>
-    <p class="card-text pt-2">{{p.description}}</p>
-    <div class="d-flex justify-content-end py-3">
-        <a href="#" class="btn btn-primary "><i class="bi bi-pencil-square"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; 
-        <a href="#" class="btn btn-danger "><i class="bi bi-trash3"></i></a>
+    <p class="card-text pt-2">{{(p.description | slice:0:more )+'...'}}<a *ngIf="hide"  class=" stretched-link" (click)="ShowMore()">ShowMore</a><a *ngIf="!hide" class="stretched-link" (click)="ShowLess()">ShowLess</a></p>
+   
+    <div class="d-flex justify-content-end py-3" *ngIf="(p.idDevelopper && p.payed==false)==false">
+        <button class="btn btn-primary " (click)="open(update,p.id)"><i class="bi bi-pencil-square"></i></button>&nbsp;&nbsp;&nbsp;&nbsp; 
+        <button class="btn btn-danger " (click)="deleteProject(p.id)"><i class="bi bi-trash3"></i></button>
+    </div>
+    
+    <div class="d-flex justify-content-end py-3" *ngIf="(p.idDevelopper && p.payed==false)==true">
+      <button class="btn btn-primary " (click)="pay(p.price)"><i class="bi bi-credit-card-2-back"></i> Payer {{p.price}}DT</button>
     </div>
   </div>
 </div>
@@ -34,3 +42,108 @@
     <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
 </div>
 </div>
+
+
+
+
+
+<ng-template #update let-modal >
+<div class="modal-header">
+               <h3>   Update project</h3>
+</div>
+<div class=" container-fluid">
+  <form [formGroup]="myForm" (submit)="updateProject()">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" formControlName="title" [(ngModel)]="Project.title" [ngClass]="{ 'is-invalid': submittedLogin && myForm.controls['title'].errors }">
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Start date</label>
+          <input type="Date" class="form-control" formControlName="startDate" [(ngModel)]="Project.startDate" [ngClass]="{ 'is-invalid': submittedLogin && myForm.controls['startDate'].errors }">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>DeadLine</label>
+          <input type="Date" class="form-control" formControlName="deadLine" [(ngModel)]="Project.deadLine" [ngClass]="{ 'is-invalid': submittedLogin && myForm.controls['deadLine'].errors }">
+        </div>
+      </div>
+    </div>
+   <div class="form-group pb-3">
+          <label>Description</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" formControlName="description" [(ngModel)]="Project.description" [ngClass]="{ 'is-invalid': submittedLogin && myForm.controls['description'].errors }"></textarea>
+          
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group pb-3">
+              <label>Technologies </label>
+                  <select class="form-select"  multiple data-live-search="true" aria-label="Default select example" formControlName="tech" [ngClass]="{ 'is-invalid': submittedLogin && myForm.controls['tech'].errors }">
+                    <option *ngFor="let techh of Technologies" [value]="techh.id">{{techh.techName+'--'+techh.domain}}</option>
+                  </select>         
+             </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group pb-3">
+              <label>Budget</label>
+              <input type="number" step="0.01" class="form-control" formControlName="price" [(ngModel)]="Project.price"  [ngClass]="{ 'is-invalid': submittedLogin && myForm.controls['price'].errors }">
+            </div>
+        </div>
+      </div>
+     <button type="submit" class="btn btn-primary ">Update</button>
+  </form>
+</div>
+</ng-template>
+
+
+<ng-template #add let-modal >
+<div class="modal-header">
+               <h3>   Add project</h3>
+</div>
+<div class=" container-fluid">
+  <form [formGroup]="myForm1" (submit)="ajoutProject()">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" formControlName="title" [(ngModel)]="Project.title" [ngClass]="{ 'is-invalid': submittedLogin && myForm1.controls['title'].errors }">
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Start date</label>
+          <input type="Date" class="form-control" formControlName="startDate" [(ngModel)]="Project.startDate" [ngClass]="{ 'is-invalid': submittedLogin && myForm1.controls['startDate'].errors }">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>DeadLine</label>
+          <input type="Date" class="form-control" formControlName="deadLine" [(ngModel)]="Project.deadLine" [ngClass]="{ 'is-invalid': submittedLogin && myForm1.controls['deadLine'].errors }">
+        </div>
+      </div>
+    </div>
+      <div class="form-group pb-3">
+          <label>Description</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" formControlName="description" [(ngModel)]="Project.description" [ngClass]="{ 'is-invalid': submittedLogin && myForm1.controls['description'].errors }"></textarea>  
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group pb-3">
+              <label>Technologies </label>
+                  <select class="form-select"  multiple data-live-search="true" aria-label="Default select example" formControlName="tech" [ngClass]="{ 'is-invalid': submittedLogin && myForm1.controls['tech'].errors }">
+                    <option *ngFor="let techh of Technologies" [value]="techh.id">{{techh.techName+'--'+techh.domain}}</option>
+                  </select>         
+             </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group pb-3">
+              <label>Budget</label>
+              <input type="number" step="0.01" class="form-control" formControlName="price" [(ngModel)]="Project.price"  [ngClass]="{ 'is-invalid': submittedLogin && myForm1.controls['price'].errors }">
+            </div>
+        </div>
+      </div>
+      
+     <button type="submit" class="btn btn-primary ">Ajout</button>
+  </form>
+</div>
+</ng-template>

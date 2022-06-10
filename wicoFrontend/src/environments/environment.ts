@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  hostUrl: 'http://localhost:8081/api'
+  hostUrl: 'http://localhost:8081/api',
+  stripe: 'pk_test_51KueAAKTa1h49sQ0Qi5ND9GQbZm3iXE80K37aKfKNydSl6oc692kjIV4f5Std18wT2pVL6zInXu7sj787J04anBV00W5B3LFzv'
 };
 
 /*
