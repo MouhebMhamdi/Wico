@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeAdminComponent } from './Pages/Admin/home-admin/home-admin.component';
 import { LoginComponent } from './Pages/auth/login/login/login.component';
+import { SignupComponent } from './Pages/auth/signup/signup.component';
 import { ClientComponent } from './Pages/Client/client/client.component';
 import { ClientprofileComponent } from './Pages/Client/clientprofile/clientprofile.component';
 import { WelcomePageComponent } from './Pages/Home/welcome-page/welcome-page.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:"personnel/profile",component:ProfileComponent},
   {path:"client/profile",component:ClientprofileComponent},
   {path:"personnel/history",component:HistoriqueComponent},
+  {path:"signup",component:SignupComponent},
   {path:"**",component:Page404Component}
 
 ];

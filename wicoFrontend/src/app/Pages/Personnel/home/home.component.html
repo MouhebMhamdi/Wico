@@ -10,7 +10,7 @@
 </div>
 <div class="card  " *ngFor="let p of Projects | filter: term | paginate: { itemsPerPage: 3, currentPage: p } ">
     
-  <div class="card-body ">
+  <div class="card-body " *ngIf="(p.idDevelopper!=0 && p.idDevelopper==idUser) || p.idDevelopper==0">
     <h5 class="card-title">{{p.title}} | </h5>
     <p ><b >Start Date: {{p.startDate | date }}</b><b class="text-danger">   |    DeadLine: {{p.deadLine | date }}</b></p>
  
@@ -27,8 +27,13 @@
     <div class="d-flex justify-content-end py-3" *ngIf="p.idDevelopper==0">
       <button class="btn btn-primary " (click)="takeProject(idUser,p.id)"><i class="bi bi-check-circle"></i> take this project</button>
     </div>
-    <div class="d-flex justify-content-end py-3" *ngIf="p.idDevelopper!=0">
+    <div *ngIf="!p.payed ">
+    <div class="d-flex justify-content-end py-3" *ngIf="p.idDevelopper!=0 && p.idDevelopper==idUser">
       <button class="btn btn-danger " (click)="ConcelProject(idUser,p.id)"><i class="bi bi-x-lg"></i> Cancel</button>
+    </div>
+    </div>
+    <div *ngIf="p.payed ">
+      <i class="d-flex justify-content-end py-3 bi bi-check-circle-fill text-success display-4"></i>
     </div>
   </div>
 </div>

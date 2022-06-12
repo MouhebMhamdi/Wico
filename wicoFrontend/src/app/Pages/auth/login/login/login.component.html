@@ -12,6 +12,6 @@
                 <input class="form-control" type="password" placeholder="Password" formControlName="password"  [ngClass]="{ 'is-invalid': submittedLogin && myFormLogin.controls['password'].errors }">
             </div>
             </div>
-            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Log In</button></div><a class="forgot" href="#">Sign Up</a><a class="forgot pt-3" href="#">Forgot your email or password?</a>
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Log In</button></div><a class="forgot" routerLink="/signup">Sign Up</a><a class="forgot pt-3" href="#">Forgot your email or password?</a>
         </form>
 </section>

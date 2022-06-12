@@ -5,7 +5,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Projects } from 'src/app/core/Model/Projects';
 import { domain, Technologies } from 'src/app/core/Model/Technologies';
+import { User } from 'src/app/core/Model/User';
 import { ProjectService } from 'src/app/core/Services/project/project.service';
+import { AuthService } from 'src/app/core/Services/user/auth.service';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 @Component({
@@ -29,7 +31,11 @@ export class ClientComponent implements OnInit {
   hide=true;
   p:any=1;
   handler:any = null;
-  constructor(private router:Router,private toastr:ToastrService, private projectService:ProjectService,private modalService: NgbModal) { }
+  developper:User;
+  Pdf:any;
+  srcPdf="";
+  token:any;
+  constructor(private router:Router,private toastr:ToastrService,private authService:AuthService, private projectService:ProjectService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getAllTechnologies();
@@ -57,30 +63,52 @@ export class ClientComponent implements OnInit {
     })
     this.getAllProjectsByIdUser();
     this.loadStripe();
+
+    
+      
   }
-  pay(amount:any) {    
+  showpdf(pdf:any,fileType:any){
+    this.srcPdf='data:'+fileType+';base64,' + pdf;
+    return this.srcPdf;
+  }
+
+  ConcelProject(idDev:Number,idProject:Number){
+    this.projectService.ConcelProject(idDev,idProject).subscribe(res=>{
+      this.getAllProjectsByIdUser();
+      this.toastr.success("Project Cancelled","Personnel notification");
+    },(err)=>this.toastr.error("You have an error please try again or contact the admin","Personnel notification"));
+  }
+  pay(amount:any,idProject:Number) {    
     let email=localStorage.getItem("email");
     var handler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51HxRkiCumzEESdU2Z1FzfCVAJyiVHyHifo0GeCMAyzHPFme6v6ahYeYbQPpD9BvXbAacO2yFQ8ETlKjo4pkHSHSh00qKzqUVK9',
       locale: 'auto',
-      token: function (token: any) {
+      token:  (token: any)=> {
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
-        console.log(token.id)
         
+        this.token=token.id;
+        this.projectService.pay(this.idUser,idProject,"CARD",String(token.id)).subscribe(res=>{
+        },()=>{
+          this.getAllProjectsByIdUser();
+          this.toastr.success("Payment made thanks !","Payement")})
       }
+      
+      
     })
+    
     handler.open({
       name: 'Wico',
       email:email,
       description: 'Projects pay',
       amount: amount * 100,
       image:"https://cdn-icons-png.flaticon.com/512/2331/2331941.png",
-      
       currency: "TND",
     });
     
+  
   }
+  
   loadStripe() {
     if(!window.document.getElementById('stripe-script')) {
       var s = window.document.createElement("script");
@@ -99,6 +127,7 @@ export class ClientComponent implements OnInit {
           }
         });
       }
+      
        
       window.document.body.appendChild(s);
     }
@@ -141,7 +170,12 @@ export class ClientComponent implements OnInit {
       this.Projects=res;
     },(err)=>console.error("error "+err));
   }
-
+  ShowPdfUser(idDev:Number,idProject:Number,content:any){
+    this.authService.getDevelopperByProject(idDev,idProject).subscribe(res=>{
+      this.developper=res;
+    })
+    this.opencontent(content);
+  }
   open(content:any,id:Number) {
     this.idUpdate=id;
     this.getProjectById(id);

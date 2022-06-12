@@ -37,4 +37,17 @@ export class AuthService {
     return this.http.get<User>(this.url+"/user/"+id);
   }
    
+  signup(data:User):Observable<User>{
+    return this.http.post<User>(this.url+"/user/add",data);
+  }
+
+  updateProfile(data:User,id:Number):Observable<User>{
+    return this.http.put<User>(this.url+"/user/update/"+id,data);
+  }
+  
+
+  getDevelopperByProject(idDev:Number,idProject:Number):Observable<User>{
+    return this.http.get<User>(this.url+"/user/getDevelopperByProject/"+idDev+"/"+idProject);
+    
+  }
 }

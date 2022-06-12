@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
         });
       };
 
-    },(err)=>{ this.toastr.error("Login failed try again","Authentification error")})
+    },(err)=>{ this.toastr.error("Login failed try again or contact the admin if your account desactivated","Authentification error")})
     
   }
 }

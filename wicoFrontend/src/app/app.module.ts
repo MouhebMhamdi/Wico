@@ -25,8 +25,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { StripeModule } from "stripe-angular";
 import { ProfileComponent } from './Pages/Personnel/profile/profile.component';
 import { HistoriqueComponent } from './Pages/Personnel/historique/historique.component';
-import { ClientprofileComponent } from './Pages/Client/clientprofile/clientprofile.component'
-
+import { ClientprofileComponent } from './Pages/Client/clientprofile/clientprofile.component';
+import { SignupComponent } from './Pages/auth/signup/signup.component'
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,8 @@ import { ClientprofileComponent } from './Pages/Client/clientprofile/clientprofi
     Page404Component,
     ProfileComponent,
     HistoriqueComponent,
-    ClientprofileComponent
+    ClientprofileComponent,
+    SignupComponent
     
   ],
   imports: [
@@ -57,6 +60,8 @@ import { ClientprofileComponent } from './Pages/Client/clientprofile/clientprofi
     CommonModule,
     Ng2SearchPipeModule,
     NgxPaginationModule,
+    PdfViewerModule,
+    PdfJsViewerModule,
     
     StripeModule.forRoot("pk_test_51KueAAKTa1h49sQ0Qi5ND9GQbZm3iXE80K37aKfKNydSl6oc692kjIV4f5Std18wT2pVL6zInXu7sj787J04anBV00W5B3LFzv")
   ],

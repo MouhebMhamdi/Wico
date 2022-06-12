@@ -59,4 +59,8 @@ export class ProjectService {
   getHistoryProjectByUser(idUser:Number):Observable<Projects[]>{
     return this.http.get<Projects[]>(this.url+"/project/history/"+idUser);
   }
+
+  pay(idUser:Number,idProject:Number,method:String,token:String){
+    return this.http.get(this.url+"/project/pay/"+idUser+"/"+idProject+"/"+method+"/"+token);
+  }
 }

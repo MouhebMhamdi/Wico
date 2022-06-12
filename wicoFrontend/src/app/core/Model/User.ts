@@ -1,9 +1,9 @@
-import { Cv } from "./Cv";
+
 import { Projects } from "./Projects";
 
 export class User{
     adress: string;
-    Adress2:String;
+    adress2:String;
     zipcode:Number;
     state:String;
     area:String;
@@ -19,7 +19,9 @@ export class User{
     prenom: string;
     role: any;
     projects:Projects[];
-    cv:Cv;
+    cvpdf:any;
+    cvpdfName:String;
+    cvpdfType:String;
       
 
   }
