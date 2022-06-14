@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,9 +24,9 @@ public class Technologies {
     @Enumerated(EnumType.STRING)
     private Domain Domain;
 
-    @ManyToOne
+    @ManyToMany(mappedBy = "technologies")
     @JsonIgnore
-    private Projects projects;
+    private List<Projects> projects;
 
 
 }

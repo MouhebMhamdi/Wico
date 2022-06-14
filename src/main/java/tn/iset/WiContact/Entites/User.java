@@ -24,7 +24,23 @@ public class User {
     private  String password;
     private   int Phone;
     private  String Adress;
-    private  String photo;
+    private  String Adress2;
+    private int zipcode;
+    private String state;
+    private String area;
+
+    @Lob
+    @Column( length=800)
+    private  byte[] photo;
+    private String photoName;
+
+    private String photoType;
+
+    @Lob
+    private  byte[] Cvpdf;
+    private String CvpdfName;
+    private String CvpdfType;
+
     @Enumerated(EnumType.STRING)
     private  Role role ;
     private Boolean Etat;
@@ -33,11 +49,13 @@ public class User {
     @JsonIgnore
     private List<Payement> payement;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "users")
     @JsonIgnore
     private List<Projects> projects;
 
-    @OneToOne(mappedBy = "user")
+
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
-    private CV cv;
+    private List<Historique>historiques;
 }

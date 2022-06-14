@@ -26,7 +26,15 @@ public class Payement {
 
     private Date DateTransuction;
 
+    private String currency;
+
+    private String token;
+
     @ManyToOne
     @JsonIgnore
     private User user;
+
+    @OneToOne
+    @JsonIgnore
+    private Projects projects;
 }

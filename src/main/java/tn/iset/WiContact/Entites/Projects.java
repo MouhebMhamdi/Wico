@@ -31,20 +31,29 @@ public class Projects {
 
     private Double price;
 
-    @OneToMany(mappedBy = "projects",cascade = CascadeType.ALL)
-    @JsonIgnore
+    @Lob
+    @Column( length=800)
+    private String Description;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Technologies> technologies;
 
-    @OneToOne(mappedBy = "projects" ,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JsonIgnore
     private Historique historique;
 
-    @ManyToMany(mappedBy = "projects",cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonIgnore
-    private List<User> users;
+    private User users;
 
+    private int idDevelopper;
 
+    @Column(nullable = false)
+    private boolean payed=false;
 
+    @OneToOne(mappedBy = "projects")
+    @JsonIgnore
+    private Payement payement;
 
 
 
