@@ -1,5 +1,6 @@
 package tn.iset.WiContact.Services;
 
+import org.springframework.http.ResponseEntity;
 import tn.iset.WiContact.Entites.Payement;
 import tn.iset.WiContact.Entites.Projects;
 import tn.iset.WiContact.Entites.Technologies;
@@ -11,7 +12,7 @@ public interface IProjectService {
     List<Projects> getAllProjectsByUser(int idUser);
     Projects addProjectAndAssignToUser(Projects projects, List<Integer> techid, int idUser);
 
-    Projects takeProject(int idDev,int idProject) throws Exception;
+    ResponseEntity<Projects> takeProject(int idDev, int idProject) throws Exception;
     Projects ConcelProject(int idDev,int idProject) throws Exception;
 
     Projects getProjectById(int id);
@@ -24,4 +25,6 @@ public interface IProjectService {
     List<Projects> getHistoriqueByUser(int idUser);
 
     void payer(int idUser,String method,int idProject,String token);
+
+    List<Projects> getAllProjectsByidDevelopper(int idDev);
 }

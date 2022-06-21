@@ -1,0 +1,84 @@
+<div class="container d-flex flex-column justify-content-center">
+
+<div class="input-group pb-5 d-flex justify-content-end">
+
+  <div class="form-outline">
+    <input type="search" id="form1" class="form-control searchTerm" [(ngModel)]="term"/>
+  </div>
+  <button type="button" disabled="true" class="btn btn-primary">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+<div class="card  " *ngFor="let p of projects | filter: term | paginate: { itemsPerPage: 3, currentPage: p } ">
+    
+  <div class="card-body ">
+    <div class="row">
+        <div class="col-1">
+            <h2 class="card-title">{{p.title}} | </h2>
+        </div>
+        <div class="col-11 d-flex justify-content-end">
+            <button class="btn btn-primary" (click)="getDevelopper(p.idDevelopper,info)"><i class="bi bi-eye"></i> Show the developper </button>
+        </div>
+    </div>
+    <p ><b >Start Date: {{p.startDate | date }}</b><b class="text-danger">   |    DeadLine: {{p.deadLine | date }}</b></p>
+ 
+    <li class="list-group-item" >Technologies</li>
+     <ul class="list-group" *ngFor="let tech of p.technologies">
+        <li   class="list-group-item list-group-item-warning" >
+      {{tech.domain}} <i *ngIf="tech.domain=='FRONTEND'" class="bi bi-file-code"></i> <i *ngIf="tech.domain=='BACKEND'" class="bi bi-window-fullscreen"></i> ==> {{tech.techName}} </li>
+        
+    </ul>
+    
+
+    <h6 class="pt-3">Description :</h6>
+    <p class="card-text pt-2">{{p.description}}</p>
+   
+    
+  
+    
+  </div>
+</div>
+<div class="paginator d-flex justify-content-center">
+    <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>
+
+<ng-template #info let-modal>
+  
+    <div class="container-fluid  mt-4 mb-4 p-3 d-flex justify-content-center">
+    
+                  <div class="card cards p-5">
+                    <div class=" image d-flex flex-column justify-content-center align-items-center">
+                        <button class="btn btn-primary">
+                          <img [src]="image(user.photo,user.photoType)" (error) ="onImgError($event)" height="100" width="100" />
+                        </button> 
+                        <span class="name mt-3">{{user.prenom}} {{user.nom}}</span>
+                        <span class="idd">@{{user.prenom}}{{user.nom}}</span>
+                        
+                         
+                     
+                        <div class="text mt-3">
+                              <i class="bi bi-envelope"></i> {{user.email}}
+                        </div> 
+                        <div class="text mt-3">
+                              <i class="bi bi-geo-alt-fill"></i> Adress 1: {{user.adress}} 
+                        </div> 
+                        <div class="text mt-3">
+                              <i class="bi bi-geo-alt-fill"></i> Adress 2: {{user.adress2}} 
+                        </div> 
+                        <div class="text mt-3">
+                                {{user.area}} {{user.state}},{{user.zipcode}}
+                        </div> 
+                        <div class="text mt-3">
+                              <i class="bi bi-telephone"></i> +216{{user.phone}}
+                        </div> 
+                        <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center">
+                              <span><i class="fa fa-twitter"></i></span> <span><i class="fa fa-facebook-f"></i></span>
+                              <span><i class="fa fa-instagram"></i></span> <span><i class="fa fa-linkedin"></i></span>
+                        </div> 
+                        <div class=" px-2 rounded mt-4 date ">
+                         <span class="join">Joined May,2021</span>
+                        </div>
+                    </div>
+      
+</div>

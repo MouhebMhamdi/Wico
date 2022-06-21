@@ -50,4 +50,13 @@ export class AuthService {
     return this.http.get<User>(this.url+"/user/getDevelopperByProject/"+idDev+"/"+idProject);
     
   }
+
+  getAllUsers():Observable<User[]>{
+    return this.http.get<User[]>(this.url+"/user/All");
+  }
+
+
+  deleteUserById(idUser:Number){
+    return this.http.delete(this.url+"/user/delete/"+idUser);
+  }
 }

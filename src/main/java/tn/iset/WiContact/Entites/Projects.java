@@ -42,7 +42,7 @@ public class Projects {
     @JsonIgnore
     private Historique historique;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JsonIgnore
     private User users;
 
@@ -51,7 +51,7 @@ public class Projects {
     @Column(nullable = false)
     private boolean payed=false;
 
-    @OneToOne(mappedBy = "projects")
+    @OneToOne(mappedBy = "projects",fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JsonIgnore
     private Payement payement;
 

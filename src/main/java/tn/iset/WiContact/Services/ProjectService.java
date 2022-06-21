@@ -1,10 +1,15 @@
 package tn.iset.WiContact.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import tn.iset.WiContact.Entites.*;
 import tn.iset.WiContact.Repositories.*;
 
+import javax.swing.text.html.parser.Entity;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -47,12 +52,17 @@ public class ProjectService implements IProjectService{
     }
 
     @Override
-    public Projects takeProject(int idDev,int idProject) throws Exception {
+    public ResponseEntity<Projects> takeProject(int idDev, int idProject) throws Exception {
         Projects pr=projectsRepository.findById(idProject).get();
         User us=userReposotiry.findById(idDev).get();
         Historique historique=new Historique();
         if(us.getRole()!= Role.PERSONNELS){
-            throw new Exception("Error");
+            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY,"You are not a personnel please contact the admin");
+
+        }
+        List<Projects> prL=projectsRepository.getAllProjectByDevelopper(idDev);
+        if(!prL.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,"You have no right to take other projects please complete your mession");
         }
 
         historique.setProjects(pr);
@@ -60,7 +70,7 @@ public class ProjectService implements IProjectService{
         historiqueRepository.save(historique);
 
         pr.setIdDevelopper(idDev);
-        return projectsRepository.save(pr);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(projectsRepository.save(pr));
     }
 
     @Override
@@ -131,5 +141,10 @@ public class ProjectService implements IProjectService{
         pr.setPayed(true);
         projectsRepository.save(pr);
         payementRepository.save(payement);
+    }
+
+    @Override
+    public List<Projects> getAllProjectsByidDevelopper(int idDev) {
+        return projectsRepository.getAllProjectByDevelopper(idDev);
     }
 }

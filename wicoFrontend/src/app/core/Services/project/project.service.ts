@@ -3,7 +3,6 @@ import { HttpClient,HttpErrorResponse,HttpEvent,HttpParams,HttpRequest   } from 
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
-import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Projects } from '../../Model/Projects';
 import { Technologies } from '../../Model/Technologies';
@@ -32,6 +31,10 @@ export class ProjectService {
     return this.http.get<Projects[]>(this.url+"/project/all");
   }
 
+  getAllProjectByDevelopper(id:Number):Observable<Projects[]>{
+    return this.http.get<Projects[]>(this.url+"/project/personnel/"+id);
+    
+  }
   takeProject(idDev:Number,idProject:Number):Observable<Projects>{
     return this.http.get<Projects>(this.url+"/project/takeProject/"+idProject+"/"+idDev);
   }

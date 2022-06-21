@@ -30,11 +30,11 @@ public class Payement {
 
     private String token;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JsonIgnore
     private User user;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JsonIgnore
     private Projects projects;
 }

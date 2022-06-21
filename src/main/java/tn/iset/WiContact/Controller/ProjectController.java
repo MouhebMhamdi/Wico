@@ -13,6 +13,7 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import tn.iset.WiContact.Services.IUserService;
+import tn.iset.WiContact.Services.ProjectService;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class ProjectController {
     }
 
     @GetMapping("takeProject/{idProject}/{idDev}")
-    public Projects takeProject(@PathVariable int idProject,@PathVariable int idDev) throws Exception {
+    public ResponseEntity<Projects> takeProject(@PathVariable int idProject,@PathVariable int idDev) throws Exception {
         return projectService.takeProject(idDev,idProject);
     }
     @GetMapping("ConcelProject/{idProject}/{idDev}")
@@ -110,5 +111,10 @@ public class ProjectController {
          projectService.payer(idUser,method,idProject,token);
          return "Payement effectuer";
 
+    }
+
+    @GetMapping("/personnel/{idDev}")
+    public List<Projects> getAllProjectsByDevelopper(@PathVariable int idDev){
+        return projectService.getAllProjectsByidDevelopper(idDev);
     }
 }

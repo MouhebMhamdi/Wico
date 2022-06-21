@@ -14,6 +14,11 @@ public interface ProjectsRepository extends JpaRepository<Projects, Integer> {
     @Query("SELECT P FROM Projects P ,User U join P.users PS on PS.id=U.id   WHERE U.id=:id")
     List<Projects> getAllProjectsByidUser(int id);
 
+    List<Projects> findAllByOrderByStartDateDesc();
+
+    @Query("SELECT P FROM Projects P WHERE P.idDevelopper=:idUser ORDER BY P.startDate  ")
+    List<Projects> getAllProjectByDevelopper(int idUser);
+
 
 
 }

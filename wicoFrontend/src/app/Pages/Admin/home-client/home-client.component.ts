@@ -9,11 +9,11 @@ import { AuthService } from 'src/app/core/Services/user/auth.service';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 @Component({
-  selector: 'app-home-admin',
-  templateUrl: './home-admin.component.html',
-  styleUrls: ['./home-admin.component.css']
+  selector: 'app-home-client',
+  templateUrl: './home-client.component.html',
+  styleUrls: ['./home-client.component.css']
 })
-export class HomeAdminComponent implements OnInit {
+export class HomeClientComponent implements OnInit {
   idUser:Number;
   term="";
   users:User[];
@@ -50,7 +50,6 @@ export class HomeAdminComponent implements OnInit {
       zipcode:new FormControl("",Validators.required),
     })
   }
-
   infos(idUser:Number,content:any){
     this.authService.getUserById(idUser).subscribe(res=>{
       this.user=res;
@@ -86,7 +85,7 @@ export class HomeAdminComponent implements OnInit {
   getAllUsers(){
     this.authService.getAllUsers().subscribe(res=>{
       
-      this.users=res.filter(item=>item.role=="PERSONNELS");
+      this.users=res.filter(item=>item.role=="CLIENTS");
     })
   }
   activateAccount(idUser:Number){
@@ -101,7 +100,7 @@ export class HomeAdminComponent implements OnInit {
     }
     this.authService.updateProfile(this.user,idUser).subscribe(res=>{
       
-      this.toastr.success("Personnel activated","Admin notification")
+      this.toastr.success("Client activated","Admin notification")
 
     },()=>this.toastr.error("You have an error please try again"))
 
@@ -135,7 +134,7 @@ export class HomeAdminComponent implements OnInit {
 
   signup(){
     
-    this.user.role="PERSONNELS";
+    this.user.role="CLIENTS";
     this.submittedLogin = true;
     if (this.myFormLogin.invalid) {
       return;

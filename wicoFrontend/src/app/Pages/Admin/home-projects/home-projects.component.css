@@ -1,0 +1,25 @@
+.container{
+    margin-top: 130px;
+    margin-bottom: 54vh;
+    
+ }
+ .card{
+     margin-bottom: 20px;
+ }
+ .my-pagination /deep/ .ngx-pagination .current {
+     background: #ffc800;
+   }
+ 
+  
+   .container-fluid{
+     margin-top: 50px;
+     margin-bottom: 10vh;
+   }
+   .cards {
+    width: 350px;
+    background-color: #efefef;
+    border: none;
+    cursor: pointer;
+ 
+    transition: all 0.5s;
+}
