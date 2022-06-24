@@ -12,7 +12,6 @@ import { HistoriqueComponent } from './Pages/Personnel/historique/historique.com
 import { HomeComponent } from './Pages/Personnel/home/home.component';
 import { ProfileComponent } from './Pages/Personnel/profile/profile.component';
 import { Page404Component } from './shared/page404/page404.component';
-
 const routes: Routes = [
   {path:"",component:WelcomePageComponent},
   {path:"login",component:LoginComponent},

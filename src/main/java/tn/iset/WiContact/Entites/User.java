@@ -41,6 +41,7 @@ public class User {
     private String CvpdfName;
     private String CvpdfType;
 
+    private double returnedMoney;
     @Enumerated(EnumType.STRING)
     private  Role role ;
     private Boolean Etat;

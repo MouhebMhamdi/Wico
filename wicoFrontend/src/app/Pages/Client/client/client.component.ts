@@ -35,9 +35,12 @@ export class ClientComponent implements OnInit {
   Pdf:any;
   srcPdf="";
   token:any;
+  date: Date;
   constructor(private router:Router,private toastr:ToastrService,private authService:AuthService, private projectService:ProjectService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.date = new Date();
+    this.date.setDate( this.date.getDate() + 15 );
     this.getAllTechnologies();
     let role =localStorage.getItem('role');
     if(role==null) this.router.navigate(['/login']);
@@ -146,8 +149,10 @@ export class ClientComponent implements OnInit {
       return;
     }
 
-    if(this.myForm1.controls['startDate'].value>=this.myForm1.controls['deadLine'].value){
+    if(this.myForm1.controls['startDate'].value>=this.myForm1.controls['deadLine'].value && new Date(this.myForm1.controls['deadLine'].value) <this.date){
+      
       this.toastr.error("Error date");
+      
       return;
     }
     let data={

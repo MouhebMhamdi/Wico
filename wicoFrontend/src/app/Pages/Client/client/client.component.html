@@ -1,6 +1,6 @@
 
 <div class="container d-flex flex-column justify-content-center">
-
+{{ date | date }}
 <div class="input-group pb-5 d-flex justify-content-end">
 <button class="btn btn-primary" (click)="opencontent(add)"><i class="bi bi-plus-circle"></i></button>
   <div class="form-outline">
@@ -13,7 +13,16 @@
 <div class="card  " *ngFor="let p of Projects | filter: term | paginate: { itemsPerPage: 3, currentPage: p } ">
     
   <div class="card-body ">
-    <h5 class="card-title">{{p.title}} | </h5>
+    <div class="row">
+    <div class="col-6 ">
+        <h1 class="card-title">{{p.title}} | </h1>
+        <div>
+            <div class="col-6" *ngIf="p.projectLink!=null">
+              <span class="badge badge-warning bg-warning text-dark">Returned Money :  {{p.users.returnedMoney}} DT</span>
+            </div>
+      </div>
+    </div>
+</div>
     <p ><b >Start Date: {{p.startDate | date }}</b><b class="text-danger">   |    DeadLine: {{p.deadLine | date }}</b></p>
  
     <li class="list-group-item" >Technologies</li>
@@ -27,7 +36,7 @@
      <p class="card-text pt-2">{{p.price}} DT</p>    
     <h6 class="pt-3">Description :</h6>
     <p class="card-text pt-2">{{(p.description | slice:0:more )+'...'}}<a *ngIf="hide"  class=" stretched-link" (click)="ShowMore()">ShowMore</a><a *ngIf="!hide" class="stretched-link" (click)="ShowLess()">ShowLess</a></p>
-   {{p.idDevelopper==0 && !p.payed}}
+  
     <div class="d-flex justify-content-end py-3" *ngIf="p.idDevelopper==0 && !p.payed">
         <button class="btn btn-primary " (click)="open(update,p.id)"><i class="bi bi-pencil-square"></i></button>&nbsp;&nbsp;&nbsp;&nbsp; 
         <button class="btn btn-danger " (click)="deleteProject(p.id)"><i class="bi bi-trash3"></i></button>
@@ -40,9 +49,14 @@
       
       </div>
     </div>
-    <div *ngIf="p.payed ">
+    <div *ngIf="p.payed && p.projectLink==null">
       <i class="d-flex justify-content-end py-3 bi bi-check-circle-fill text-success display-4"></i>
     </div>
+    <div class="d-flex justify-content-end" *ngIf="p.payed && p.projectLink!=null"  >
+        <a [href]="p.projectLink" target="_blank" class="btn btn-primary  w-20"><i class="bi bi-github"></i> Your project</a>
+    
+    </div>
+   
   </div>
 </div>
 <div class="paginator d-flex justify-content-center">

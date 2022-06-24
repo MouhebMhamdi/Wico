@@ -11,7 +11,14 @@
 <div class="card  " *ngFor="let p of Projects | filter: term | paginate: { itemsPerPage: 3, currentPage: p } ">
     
   <div class="card-body " *ngIf="(p.idDevelopper!=0 && p.idDevelopper==idUser) || p.idDevelopper==0">
-    <h5 class="card-title">{{p.title}} | </h5>
+  <div class="row">
+    <div class="col-6 d-flex flex-row">
+      <h1 class="card-title">{{p.title}} | <span *ngIf="p.penaliter!=0" class="badge badge-warning bg-warning text-dark">Delay !!</span> </h1>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+      <span class="badge badge-primary">Penalties :  {{p.penaliter}} DT</span>
+    </div>
+  </div>
     <p ><b >Start Date: {{p.startDate | date }}</b><b class="text-danger">   |    DeadLine: {{p.deadLine | date }}</b></p>
  
     <li class="list-group-item" >Technologies</li>
@@ -32,8 +39,20 @@
       <button class="btn btn-danger " (click)="ConcelProject(idUser,p.id)"><i class="bi bi-x-lg"></i> Cancel</button>
     </div>
     </div>
-    <div *ngIf="p.payed ">
+    <div *ngIf="p.payed" >
+       <div class="row">
+      <div class="col-6 d-flex flex-row">
+        <i class="d-flex justify-content-end py-3 bi bi-check-circle-fill text-success ">Payement affected</i>
+
+      </div>
+    <div class="col-6 d-flex justify-content-end" *ngIf="p.projectLink==null">
+            <button class="btn btn-success" (click)="sendProjectToTheClient(p.id,finish)"><i class="bi bi-check-circle-fill " > </i> Project finished</button>
+
+    </div>
+    <div class="col-6 d-flex justify-content-end" *ngIf="p.projectLink!=null">
       <i class="d-flex justify-content-end py-3 bi bi-check-circle-fill text-success display-4"></i>
+    </div>
+  </div>
     </div>
   </div>
 </div>
@@ -43,3 +62,15 @@
 </div>
 
 
+<ng-template #finish let-modal>
+<div class="modal-header ">
+      <h2 class="pb-3">PERSONNELS</h2>
+    </div>
+    <i class="bi bi-github text-warning d-flex justify-content-center fa-10x pt-5"></i>
+    <div class="container-fluid text-center">
+        <form method="post" [formGroup]="myFormFinishProject" class="pt-5 pb-5" (submit)="projectFinished()">
+          <input type="url" class="form-control mb-3" formControlName="projectLink" [ngClass]="{ 'is-invalid': submittedLogin && myFormFinishProject.controls['projectLink'].errors }">
+          <button type="submit" class="btn btn-primary w-100">Send</button>
+        </form>
+</div>
+</ng-template>

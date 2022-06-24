@@ -31,7 +31,7 @@
         <td>{{p.phone}}</td>
         <td class="text-center">
             <div class="form-check form-switch pt-3 pl-5">
-                 <input class="form-check-input" [(ngModel)]="p.etat" type="checkbox" role="switch" (click)="activateAccount(p.id)" id="flexSwitchCheckDefault" [value]="true" style="transform: scale(1.8);">
+                 <input class="form-check-input" [(ngModel)]="p.etat" type="checkbox" role="switch" (click)="activateAccount(p.id,$event)" id="flexSwitchCheckDefault" [value]="true" style="transform: scale(1.8);">
 
             </div>
             

@@ -22,6 +22,7 @@ export class User{
     cvpdf:any;
     cvpdfName:String;
     cvpdfType:String;
+    returnedMoney:Number;
       
 
   }

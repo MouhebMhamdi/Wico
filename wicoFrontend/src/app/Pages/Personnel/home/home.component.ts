@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +8,7 @@ import { domain, Technologies } from 'src/app/core/Model/Technologies';
 import { User } from 'src/app/core/Model/User';
 import { ProjectService } from 'src/app/core/Services/project/project.service';
 import { AuthService } from 'src/app/core/Services/user/auth.service';
+import * as urlRegex from 'url-regex';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +25,11 @@ export class HomeComponent implements OnInit {
   p:any=1;
   more:any=200;
   hide=true;
+  project:Projects;
   developper:User;
+  idProjectfinished:Number;
+  myFormFinishProject:FormGroup;
+  submittedLogin:Boolean=false;
   constructor(private router:Router,private modalService: NgbModal,private toastr:ToastrService,private authService:AuthService,private projectService:ProjectService) { }
 
   ngOnInit(): void {
@@ -34,6 +40,11 @@ export class HomeComponent implements OnInit {
     let id=Number(localStorage.getItem("idUser"));
     this.idUser=id;
     this.getAllProjects();
+    const urlRegexx = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+    this.myFormFinishProject=new FormGroup({
+      projectLink:new FormControl("",[Validators.required,Validators.pattern(urlRegexx),])
+     
+    })
   }
   ShowMore(){
     this.hide=false;
@@ -67,7 +78,29 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  
+  sendProjectToTheClient(idProject:Number,content:any){
+    this.idProjectfinished=idProject;
+    this.opencontent(content);
+  }
+  projectFinished(){
+    this.submittedLogin = true;
+    if (this.myFormFinishProject.invalid) {
+      return;
+    }
+    let data={
+      projectLink:this.myFormFinishProject.controls['projectLink'].value
+    }
+    this.projectService.setFinishedProject(this.idProjectfinished,data).subscribe(res=>{
+      this.toastr.success("Project sended successfully !!","Personnel notification")
+    },(err)=>this.toastr.error("You have an error  !!"+err,"Personnel notification"))
+  }
+  opencontent(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res:any) => {
+     // this.closeResult = `Closed with: ${result}`;
+    }, (reason:any) => {
+      this.getAllProjects();
+    });
+  }
   ConcelProject(idDev:Number,idProject:Number){
     this.projectService.ConcelProject(idDev,idProject).subscribe(res=>{
       this.getAllProjects();

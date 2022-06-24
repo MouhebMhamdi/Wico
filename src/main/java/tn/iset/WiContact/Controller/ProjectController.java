@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.iset.WiContact.DAO.UrlVerif;
 import tn.iset.WiContact.Entites.Payement;
 import tn.iset.WiContact.Entites.Projects;
 import tn.iset.WiContact.Entites.Technologies;
@@ -15,6 +16,7 @@ import com.stripe.model.Charge;
 import tn.iset.WiContact.Services.IUserService;
 import tn.iset.WiContact.Services.ProjectService;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +67,11 @@ public class ProjectController {
         return projectService.ConcelProject(idDev,idProject);
     }
 
+    @GetMapping("finish/{idPro}")
+    public String finishProject(@PathVariable int idPro){
+        projectService.ProjectCompleted(idPro);
+        return "Project completed ";
+    }
     @PostMapping(value="/charges/{idUser}/{idProject}", consumes = "application/json")
     public ResponseEntity<?> chargeCard(@RequestBody Payement chargeForm,@PathVariable int idUser,@PathVariable int idProject) {
 
@@ -116,5 +123,10 @@ public class ProjectController {
     @GetMapping("/personnel/{idDev}")
     public List<Projects> getAllProjectsByDevelopper(@PathVariable int idDev){
         return projectService.getAllProjectsByidDevelopper(idDev);
+    }
+
+    @PostMapping("/setFinished/{idProject}")
+    public void setfinishedProject(@PathVariable int idProject,@RequestBody @Valid UrlVerif link){
+        projectService.setfinishedProject(idProject,link);
     }
 }

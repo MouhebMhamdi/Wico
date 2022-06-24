@@ -31,6 +31,13 @@ public class Projects {
 
     private Double price;
 
+    private boolean finished=false;
+
+    private double penaliter;
+
+    private String projectLink;
+
+
     @Lob
     @Column( length=800)
     private String Description;
@@ -43,7 +50,7 @@ public class Projects {
     private Historique historique;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-    @JsonIgnore
+
     private User users;
 
     private int idDevelopper;

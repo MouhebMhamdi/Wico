@@ -21,3 +21,22 @@
     position: relative;
 }
 
+.badge-warning{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  width: auto;
+
+  font-size: 13pt;
+  height: auto;
+}
+.badge-primary{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  width: auto;
+  font-size: 10pt;
+  height: auto;
+}

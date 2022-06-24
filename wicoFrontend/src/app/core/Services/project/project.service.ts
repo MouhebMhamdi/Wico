@@ -66,4 +66,8 @@ export class ProjectService {
   pay(idUser:Number,idProject:Number,method:String,token:String){
     return this.http.get(this.url+"/project/pay/"+idUser+"/"+idProject+"/"+method+"/"+token);
   }
+
+  setFinishedProject(idProject:Number,data:any){
+    return this.http.post(this.url+"/project/setFinished/"+idProject,data);
+  }
 }

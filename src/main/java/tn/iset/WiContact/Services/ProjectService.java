@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import tn.iset.WiContact.DAO.UrlVerif;
 import tn.iset.WiContact.Entites.*;
 import tn.iset.WiContact.Repositories.*;
 
@@ -62,7 +64,11 @@ public class ProjectService implements IProjectService{
         }
         List<Projects> prL=projectsRepository.getAllProjectByDevelopper(idDev);
         if(!prL.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,"You have no right to take other projects please complete your mession");
+            for(Projects p:prL){
+                if(!p.isFinished()){
+                    throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,"You have no right to take other projects please complete your mession");
+                }
+            }
         }
 
         historique.setProjects(pr);
@@ -72,7 +78,30 @@ public class ProjectService implements IProjectService{
         pr.setIdDevelopper(idDev);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(projectsRepository.save(pr));
     }
+    //@Scheduled(cron = "0 0 8,10 * * *")
+    @Scheduled(cron = "*/15 * * * * *")
+    public void verifPenaliter(){
+        List<Projects> projects=projectsRepository.findAll();
+        for(Projects p:projects){
+            if(penaliter(p.getDeadLine()) && !p.isFinished() && p.isPayed()){
+                p.setPenaliter(p.getPenaliter()+(20*p.getPrice()/100));
+                if(p.getPenaliter()!=p.getPrice()){
+                    projectsRepository.save(p);
+                }
 
+                System.out.println("penalité set ");
+
+            }
+        }
+        System.out.println("schuduled work");
+    }
+    private boolean penaliter(Date date){
+        Date d=new Date();
+        if(d.after(date)){
+            return true;
+        }
+        return false;
+    }
     @Override
     public Projects ConcelProject(int idDev, int idProject) throws Exception {
         Projects pr=projectsRepository.findById(idProject).get();
@@ -146,5 +175,23 @@ public class ProjectService implements IProjectService{
     @Override
     public List<Projects> getAllProjectsByidDevelopper(int idDev) {
         return projectsRepository.getAllProjectByDevelopper(idDev);
+    }
+
+    @Override
+    public void ProjectCompleted(int idPro) {
+        Projects p=projectsRepository.findById(idPro).get();
+        p.setFinished(true);
+        projectsRepository.save(p);
+    }
+
+    @Override
+    public void setfinishedProject(int idProject, UrlVerif link) {
+        Projects pr=projectsRepository.findById(idProject).get();
+        User us=userReposotiry.findById(pr.getUsers().getId()).get();
+        us.setReturnedMoney(pr.getPenaliter());
+        userReposotiry.save(us);
+        pr.setProjectLink(link.getProjectLink());
+        pr.setFinished(true);
+        projectsRepository.save(pr);
     }
 }

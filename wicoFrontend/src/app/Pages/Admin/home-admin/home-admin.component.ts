@@ -28,6 +28,7 @@ export class HomeAdminComponent implements OnInit {
   User:User=new User();
   submittedLogin:Boolean=false;
   Image:any;
+  activated:boolean=false;
   constructor(private router:Router,private toastr:ToastrService,private authService:AuthService, private projectService:ProjectService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -89,22 +90,23 @@ export class HomeAdminComponent implements OnInit {
       this.users=res.filter(item=>item.role=="PERSONNELS");
     })
   }
-  activateAccount(idUser:Number){
+  activateAccount(idUser:Number,event:any){
+    console.log(event.target.checked)
     this.authService.getUserById(idUser).subscribe(res=>{
      this.user=res;
 
     })
-    if(this.user.etat){
-      this.user.etat=false;
-    }else{
-      this.user.etat=true;
-    }
+    this.user.etat=event.target.checked;
     this.authService.updateProfile(this.user,idUser).subscribe(res=>{
+      if(event.target.checked){
+        this.toastr.success("Personnel activated","Admin notification")
+      }else{
+        this.toastr.warning("Personnel Desactivated","Admin notification")
+      }
       
-      this.toastr.success("Personnel activated","Admin notification")
 
     },()=>this.toastr.error("You have an error please try again"))
-
+    
   }
   image(img:any,fileType:any){
     this.imgSrc='data:'+fileType+';base64,' + img;

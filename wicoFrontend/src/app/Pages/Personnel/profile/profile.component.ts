@@ -38,12 +38,12 @@ export class ProfileComponent implements OnInit {
       adress2:new FormControl(this.user.adress2),
       area:new FormControl(this.user.area,Validators.required),
       nom:new FormControl(this.user.nom,Validators.required),
-      phone:new FormControl(this.user.phone,Validators.required),
       photo:new FormControl(this.user.photo),
       prenom:new FormControl(this.user.prenom,Validators.required),
       state:new FormControl(this.user.state,Validators.required),
-      zipcode:new FormControl(this.user.zipcode,Validators.required),
-      pdf:new FormControl(this.user.cvpdf)
+      pdf:new FormControl(this.user.cvpdf),
+      phone:new FormControl("",[Validators.required,Validators.pattern("^[0-9]{8}$")]),
+      zipcode:new FormControl("",[Validators.required,Validators.pattern("^[0-9]{4,5}$")]),
     })
   }
 

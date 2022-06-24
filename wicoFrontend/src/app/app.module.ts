@@ -31,6 +31,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { HomeClientComponent } from './Pages/Admin/home-client/home-client.component';
 import { HomeProjectsComponent } from './Pages/Admin/home-projects/home-projects.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +67,7 @@ import { HomeProjectsComponent } from './Pages/Admin/home-projects/home-projects
     NgxPaginationModule,
     PdfViewerModule,
     PdfJsViewerModule,
+    
     
     StripeModule.forRoot("pk_test_51KueAAKTa1h49sQ0Qi5ND9GQbZm3iXE80K37aKfKNydSl6oc692kjIV4f5Std18wT2pVL6zInXu7sj787J04anBV00W5B3LFzv")
   ],

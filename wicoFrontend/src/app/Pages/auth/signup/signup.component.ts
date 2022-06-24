@@ -15,7 +15,9 @@ export class SignupComponent implements OnInit {
   user:User=new User();
   submittedLogin:Boolean=false;
   image:any;
-
+  Pdf:any;
+  srcPdf="";
+  selectedRole="";
   constructor(private authentificationService:AuthService,
     private formBuilder: FormBuilder,private toastr: ToastrService,private router:Router) { }
 
@@ -35,17 +37,41 @@ export class SignupComponent implements OnInit {
       email:new FormControl("",[Validators.email,Validators.required]),
       password:new FormControl("",Validators.required),
       adress:new FormControl("",Validators.required),
-      adress2:new FormControl("",Validators.required),
+      adress2:new FormControl(""),
       area:new FormControl("",Validators.required),
       nom:new FormControl("",Validators.required),
-      phone:new FormControl("",Validators.required),
+      
       photo:new FormControl("",Validators.required),
       prenom:new FormControl("",Validators.required),
       role:new FormControl("",Validators.required),
       state:new FormControl("",Validators.required),
-      zipcode:new FormControl("",Validators.required),
+      phone:new FormControl("",[Validators.required,Validators.pattern("^[0-9]{8}$")]),
+      zipcode:new FormControl("",[Validators.required,Validators.pattern("^[0-9]{4,5}$")]),
+      pdf:new FormControl("")
 
     })
+  }
+  selectRole(event:any){
+    this.selectedRole=event.target.value;
+  }
+  pdf(event:any) {
+    
+    this.Pdf = event.target.files[0];
+    
+    if(this.Pdf.type!="application/pdf"){
+      this.toastr.error("This is not a pdf file");
+      return;
+    }
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(this.Pdf);
+    fileReader.onload = () => {
+    
+    this.user.cvpdf=String(fileReader.result).replace("data:"+this.Pdf.type+";base64,", "");
+    this.user.cvpdfType=this.Pdf.type;
+    this.user.cvpdfName=this.Pdf.name;
+    console.log(this.user)
+  }
+  
   }
   onFileSelected(event:any) {
     
@@ -79,6 +105,7 @@ export class SignupComponent implements OnInit {
     }
     this.authentificationService.signup(this.user).subscribe(res=>{
       this.toastr.success("User added successfuly !","Create account notification");
+      this.router.navigate(['/login'])
     },()=>this.toastr.error("Error please try again !","Create account notification"));
   }
 }
