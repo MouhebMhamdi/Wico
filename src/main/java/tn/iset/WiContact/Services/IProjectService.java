@@ -32,4 +32,11 @@ public interface IProjectService {
     void ProjectCompleted(int idPro);
 
     void setfinishedProject(int idProject, UrlVerif link);
+
+    void ajoutTechnologies(List<Technologies> technologies);
+
+    void ajoutTechnologie(Technologies technologies);
+
+    void deleteTechnologies(int idTech);
+
 }

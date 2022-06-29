@@ -31,6 +31,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { HomeClientComponent } from './Pages/Admin/home-client/home-client.component';
 import { HomeProjectsComponent } from './Pages/Admin/home-projects/home-projects.component';
+import { TechnologiesComponent } from './Pages/Admin/technologies/technologies.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { HomeProjectsComponent } from './Pages/Admin/home-projects/home-projects
     ClientprofileComponent,
     SignupComponent,
     HomeClientComponent,
-    HomeProjectsComponent
+    HomeProjectsComponent,
+    TechnologiesComponent
     
   ],
   imports: [

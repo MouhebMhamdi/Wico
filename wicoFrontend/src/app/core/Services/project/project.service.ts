@@ -70,4 +70,12 @@ export class ProjectService {
   setFinishedProject(idProject:Number,data:any){
     return this.http.post(this.url+"/project/setFinished/"+idProject,data);
   }
+
+  addTech(data:Technologies){
+    return this.http.post(this.url+"/project/addTech",data,{  responseType: 'text'});
+  }
+
+  deleteTech(idTech:Number){
+    return this.http.delete(this.url+"/project/delete/tech/"+idTech,{  responseType: 'text'});
+  }
 }

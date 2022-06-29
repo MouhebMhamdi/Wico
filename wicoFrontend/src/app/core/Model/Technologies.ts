@@ -6,4 +6,5 @@ export class Technologies{
     id:Number;
     domain:any;
     techName:string;
+    description:String;
 }

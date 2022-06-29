@@ -40,6 +40,7 @@ public class ProjectController {
         Stripe.apiKey = apiKey;
     }
 
+
     @GetMapping("/all")
     public List<Projects> getAllProjects(){
         return projectService.getAllProjects();
@@ -48,6 +49,8 @@ public class ProjectController {
     public Projects getProjectById(@PathVariable int id){
         return projectService.getProjectById(id);
     }
+
+
     @GetMapping("/all/{idUser}")
     public List<Projects> getAllProjectsByUser(@PathVariable int idUser){
         return projectService.getAllProjectsByUser(idUser);
@@ -128,5 +131,22 @@ public class ProjectController {
     @PostMapping("/setFinished/{idProject}")
     public void setfinishedProject(@PathVariable int idProject,@RequestBody @Valid UrlVerif link){
         projectService.setfinishedProject(idProject,link);
+    }
+
+    @PostMapping("/addTechnologies")
+    public String addTechnologies(@RequestBody List<Technologies> technologies ){
+        projectService.ajoutTechnologies(technologies);
+        return "Technologies added";
+    }
+    @PostMapping("/addTech")
+    public String addTechnologie(@RequestBody Technologies technologies ){
+        projectService.ajoutTechnologie(technologies);
+        return "Technologies added";
+    }
+
+    @DeleteMapping("/delete/tech/{idTech}")
+    public String deleteTechById(@PathVariable int idTech){
+        projectService.deleteTechnologies(idTech);
+        return "tech deleted";
     }
 }

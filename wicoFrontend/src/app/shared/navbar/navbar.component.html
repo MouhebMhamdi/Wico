@@ -16,6 +16,7 @@
                         <li class="nav-item" ><a class="nav-link" [routerLink]="['./admin']"  *ngIf="role=='ADMIN'">Personnels</a></li>
                         <li class="nav-item" ><a class="nav-link" [routerLink]="['./admin/client']" *ngIf="role=='ADMIN'">Clients</a></li>
                         <li class="nav-item" ><a class="nav-link" [routerLink]="['./admin/projects']"  *ngIf="role=='ADMIN'">Projects</a></li>
+                        <li class="nav-item" ><a class="nav-link" [routerLink]="['./technologies']"  *ngIf="role=='ADMIN'">technologies</a></li>
                         
                         <li  class="nav-item">
                             <div class="dropdown" *ngIf="data!=null">
@@ -25,6 +26,7 @@
                                     <a routerLink="/client/profile" *ngIf="role=='CLIENTS'">Profile</a>
                                     <a routerLink="/personnel" *ngIf="role!='ADMIN'">Projects</a>
                                     <a  routerLink="/personnel/history" *ngIf="role=='PERSONNELS'">History</a>
+                                    
                                     <a href="#about" (click)="logout()" routerLink="/login">Logout</a>
                                 </div>
                             </div>

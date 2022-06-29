@@ -194,4 +194,21 @@ public class ProjectService implements IProjectService{
         pr.setFinished(true);
         projectsRepository.save(pr);
     }
+
+    @Override
+    public void ajoutTechnologies(List<Technologies> technologies) {
+        technologiesRepository.saveAll(technologies);
+    }
+
+    @Override
+    public void ajoutTechnologie(Technologies technologies) {
+        technologiesRepository.save(technologies);
+    }
+
+    @Override
+    public void deleteTechnologies(int idTech) {
+        technologiesRepository.deleteById(idTech);
+    }
+
+
 }

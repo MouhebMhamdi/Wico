@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeAdminComponent } from './Pages/Admin/home-admin/home-admin.component';
 import { HomeClientComponent } from './Pages/Admin/home-client/home-client.component';
 import { HomeProjectsComponent } from './Pages/Admin/home-projects/home-projects.component';
+import { TechnologiesComponent } from './Pages/Admin/technologies/technologies.component';
 import { LoginComponent } from './Pages/auth/login/login/login.component';
 import { SignupComponent } from './Pages/auth/signup/signup.component';
 import { ClientComponent } from './Pages/Client/client/client.component';
@@ -21,7 +22,7 @@ const routes: Routes = [
   {path:"admin/client",component:HomeClientComponent},
   {path:"admin/projects",component:HomeProjectsComponent},
   {path:"personnel/profile",component:ProfileComponent},
-  
+  {path:"technologies",component:TechnologiesComponent},
   {path:"client/profile",component:ClientprofileComponent},
   {path:"personnel/history",component:HistoriqueComponent},
   {path:"signup",component:SignupComponent},

@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+
 @NoArgsConstructor
 public class Technologies {
     @Id
@@ -21,10 +22,14 @@ public class Technologies {
 
     private String TechName;
 
+    @Lob
+    @Column( length=800)
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private Domain Domain;
 
-    @ManyToMany(mappedBy = "technologies")
+    @ManyToMany(mappedBy = "technologies",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Projects> projects;
 
